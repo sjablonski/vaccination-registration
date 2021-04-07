@@ -1,3 +1,4 @@
+import registrationController from "controllers/registration.controller";
 import express, { Application } from "express";
 import consumerService from "services/consumer.service";
 import mongoService from "services/mongo.service";
@@ -16,6 +17,7 @@ const run = async () => {
     eachMessage: async ({ topic, partition, message }) => {
       const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`;
       console.log(`- ${prefix} ${message.key}#${message.value}`);
+      registrationController.add(message);
     },
   });
 };
