@@ -1,4 +1,5 @@
 import express, { Application } from "express";
+import cors from "cors";
 import routers from "routes";
 import producerService from "services/producer.service";
 
@@ -6,10 +7,11 @@ const app: Application = express();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors());
 
 const run = async () => {
   app.use("/", routers);
-  app.listen(3000);
+  app.listen(3001);
 
   await producerService.connect();
 };

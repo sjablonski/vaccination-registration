@@ -1,11 +1,5 @@
 import { Trim } from "class-sanitizer";
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsMobilePhone,
-  IsString,
-  Matches,
-} from "class-validator";
+import { IsEmail, IsNotEmpty, IsMobilePhone, IsString } from "class-validator";
 import IsValidPesel from "utils/IsValidPesel";
 
 class RegistrationModel {
@@ -26,11 +20,6 @@ class RegistrationModel {
   pesel: string;
 
   @IsNotEmpty()
-  @Matches(/\d{2}-\d{3}/, { message: "zip must match 00-000" })
-  @Trim()
-  zip: string;
-
-  @IsNotEmpty()
   @IsEmail()
   @Trim()
   email: string;
@@ -38,22 +27,20 @@ class RegistrationModel {
   @IsNotEmpty()
   @IsMobilePhone("pl-PL")
   @Trim()
-  phone: string;
+  phoneNumber: string;
 
   constructor(
     firstName: string,
     lastName: string,
     pesel: string,
-    zip: string,
     email: string,
-    phone: string
+    phoneNumber: string
   ) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.pesel = pesel;
-    this.zip = zip;
     this.email = email;
-    this.phone = phone;
+    this.phoneNumber = phoneNumber;
   }
 }
 
