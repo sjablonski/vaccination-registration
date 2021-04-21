@@ -5,10 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@Document
+@NoArgsConstructor
+@AllArgsConstructor
 public class Patient {
 
     private String firstName;

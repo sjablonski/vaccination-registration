@@ -8,10 +8,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "vaccinationSchedule")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@Document(collection = "vaccinationSchedule")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Vaccination {
 
     @Id
