@@ -18,15 +18,15 @@ public class KafkaProducerService {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
-    public KafkaProducerService(KafkaTemplate<String, String> kafkaTemplate) {
+    public KafkaProducerService(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper objectMapper) {
         this.kafkaTemplate = kafkaTemplate;
-        this.objectMapper = new ObjectMapper();
+        this.objectMapper = objectMapper;
     }
 
     public void sendRegistration(Patient patient) throws JsonProcessingException {
         String key = "1";
         String message = objectMapper.writeValueAsString(patient);
-        ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send("test-topic", message);
+        ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send("registration-topic", message);
         future.addCallback(new KafkaSendCallback<>() {
 
             @Override
@@ -48,11 +48,9 @@ public class KafkaProducerService {
         } catch (Throwable throwable) {
             log.error("Error in OnFailure: {}", throwable.getMessage());
         }
-
-
     }
 
     private void handleSuccess(String key, String value, SendResult<String, String> result) {
-        log.info("Message Sent SuccessFully for the key : {} and the value is {} , partition is {}", key, value, result.getRecordMetadata().partition());
+        log.info("Message Sent Successfully for the key : {} and the value is {} , partition is {}", key, value, result.getRecordMetadata().partition());
     }
 }
