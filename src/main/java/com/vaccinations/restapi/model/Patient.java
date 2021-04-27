@@ -2,31 +2,36 @@ package com.vaccinations.restapi.model;
 
 import com.vaccinations.restapi.validator.PESEL;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Patient {
-    @NotBlank(message = "Not blank")
+    @NotBlank(message = "{validation.firstName.NotBlank.message}")
     private String firstName;
 
-    @NotBlank(message = "Not blank")
+    @NotBlank(message = "{validation.lastName.NotBlank.message}")
     private String lastName;
 
-    @PESEL
+    @PESEL(message = "{validation.pesel.PESEL.message}")
     private String pesel;
 
-    @Email(message = "Not email")
+    @NotBlank(message = "{validation.email.NotBlank.message}")
+    @Email(message = "{validation.email.Email.message}")
     private String email;
 
-    @NotBlank(message = "Not blank")
-    @Pattern(regexp = "^(?:(?:(?:(?:\\+|00)\\d{2})?[ -]?(?:(?:\\(0?\\d{2}\\))|(?:0?\\d{2})))?[ -]?(?:\\d{3}[- ]?\\d{2}[- ]?\\d{2}|\\d{2}[- ]?\\d{2}[- ]?\\d{3}|\\d{7})|(?:(?:(?:\\+|00)\\d{2})?[ -]?\\d{3}[ -]?\\d{3}[ -]?\\d{3}))$")
+    @NotNull(message = "{validation.phoneNumber.NotNull.message}")
+    @Pattern(regexp = "^(?:(?:(?:(?:\\+|00)\\d{2})?[ -]?(?:(?:\\(0?\\d{2}\\))|(?:0?\\d{2})))?[ -]?(?:\\d{3}[- ]?\\d{2}[- ]?\\d{2}|\\d{2}[- ]?\\d{2}[- ]?\\d{3}|\\d{7})|(?:(?:(?:\\+|00)\\d{2})?[ -]?\\d{3}[ -]?\\d{3}[ -]?\\d{3}))$",
+            message = "{validation.phoneNumber.Pattern.message}")
     private String phoneNumber;
 
     @Override
