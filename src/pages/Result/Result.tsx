@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Result as ResultComponent } from 'antd';
 import { Redirect, useHistory } from 'react-router';
 

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Alert, Button, Col, Form, Input, Row, Spin, Typography } from 'antd';
+import { Alert, Button, Col, Form, Input, Row, Typography } from 'antd';
 import axios from 'axios';
 
 /* eslint-disable no-template-curly-in-string */
@@ -159,13 +159,9 @@ const RegistrationForm = () => {
           <Form.Item>
             <Row>
               <Col span={24} style={{ textAlign: 'right' }}>
-                {!isSubmitting ? (
-                  <Button type="primary" htmlType="submit">
-                    Wyślij formularz
-                  </Button>
-                ) : (
-                  <Spin />
-                )}
+                <Button loading={isSubmitting} type="primary" htmlType="submit">
+                  Wyślij formularz
+                </Button>
               </Col>
             </Row>
           </Form.Item>

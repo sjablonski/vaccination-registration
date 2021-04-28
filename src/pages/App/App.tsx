@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { Button, Result as ResultComponent } from 'antd';
 import RegistrationForm from 'pages/RegistrationForm';
@@ -15,7 +14,6 @@ function App() {
           <Route
             path="*"
             render={(props) => {
-              console.log(props);
               return (
                 <ResultComponent
                   status="404"
