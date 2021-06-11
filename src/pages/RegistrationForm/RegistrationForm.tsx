@@ -22,11 +22,41 @@ const phoneNumberPattern = /^(?:(?:(?:(?:\+|00)\d{2})?[ -]?(?:(?:\(0?\d{2}\))|(?
 
 const errorInitState = { isError: false, message: '', description: '' };
 
-const RegistrationForm = () => {
+function RegistrationForm() {
   const [form] = Form.useForm();
   const [isSubmitting, setSubmitting] = useState(false);
   const [error, setError] = useState(errorInitState);
   const history = useHistory();
+
+  const handleError = (err: any) => {
+    if (err.response) {
+      if (err.response.data?.errors?.constructor === Object) {
+        const { errors } = err.response.data;
+        Object.keys(errors).forEach((key: any) => {
+          form.setFields([
+            {
+              name: key,
+              errors: [errors[key]],
+            },
+          ]);
+        });
+      } else if (err.response?.status >= 500 && err.response?.status <= 599) {
+        setError({
+          isError: true,
+          message: `Błąd ${err.response.status}`,
+          description: 'Przepraszam, wystąpił wewnętrzny błąd systemu.',
+        });
+      } else {
+        throw err;
+      }
+    } else {
+      setError({
+        isError: true,
+        message: 'Przesyłanie nie powiodło się!',
+        description: 'Przepraszamy, wystąpił nieoczekiwany błąd.',
+      });
+    }
+  };
 
   const onFinish = (values: any) => {
     setSubmitting(true);
@@ -46,33 +76,7 @@ const RegistrationForm = () => {
       })
       .catch((err) => {
         setSubmitting(false);
-        if (err.response) {
-          if (err.response.data?.errors?.constructor === Object) {
-            const { errors } = err.response.data;
-            Object.keys(errors).forEach((key: any) => {
-              form.setFields([
-                {
-                  name: key,
-                  errors: [errors[key]],
-                },
-              ]);
-            });
-          } else if (err.response?.status >= 500 && err.response?.status <= 599) {
-            setError({
-              isError: true,
-              message: `Błąd ${err.response.status}`,
-              description: 'Przepraszam, wystąpił wewnętrzny błąd systemu.',
-            });
-          } else {
-            throw err;
-          }
-        } else {
-          setError({
-            isError: true,
-            message: 'Przesyłanie nie powiodło się!',
-            description: 'Przepraszamy, wystąpił nieoczekiwany błąd.',
-          });
-        }
+        handleError(err);
       });
   };
 
@@ -169,6 +173,6 @@ const RegistrationForm = () => {
       </Col>
     </Row>
   );
-};
+}
 
 export default RegistrationForm;

@@ -1,7 +1,7 @@
 import { Button, Result as ResultComponent } from 'antd';
 import { Redirect, useHistory } from 'react-router';
 
-const Result = ({ location }: any) => {
+function Result({ location }: any) {
   const history = useHistory();
 
   const { status, title, subTitle } = (location && location.state) || {};
@@ -21,6 +21,6 @@ const Result = ({ location }: any) => {
   } else {
     return <Redirect to={{ pathname: '/' }} />;
   }
-};
+}
 
 export default Result;
