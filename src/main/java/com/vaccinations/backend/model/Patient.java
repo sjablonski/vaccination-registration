@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Patient {
-
+    private String id;
     private String firstName;
     private String lastName;
     private String pesel;
@@ -19,6 +19,6 @@ public class Patient {
 
     @Override
     public String toString() {
-        return String.format("Patient [firstName=\"%s\", lastName=\"%s\", pesel=\"%s\", email=\"%s\", phoneNumber=\"%s\"]", firstName, lastName, pesel, email, phoneNumber);
+        return String.format("Patient [id=\"%s\", firstName=\"%s\", lastName=\"%s\", pesel=\"%s\", email=\"%s\", phoneNumber=\"%s\"]", id, firstName, lastName, pesel, email, phoneNumber);
     }
 }

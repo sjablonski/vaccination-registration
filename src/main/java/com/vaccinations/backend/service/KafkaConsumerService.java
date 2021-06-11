@@ -34,17 +34,19 @@ public class KafkaConsumerService {
     public void onMessage(ConsumerRecord<String, String> consumerRecord, Acknowledgment acknowledgment) {
         try {
             Patient patient = objectMapper.readValue(consumerRecord.value(), Patient.class);
-            log.info(patient.toString());
+
+            log.info("Message Received: {}", patient.toString());
 
             Vaccination vaccination = vaccinationRepository.findFirstAvailableVaccinationDate();
 
             if (vaccination != null) {
                 vaccinationRepository.save(updateVaccination(vaccination, patient));
-
                 kafkaProducerService.sendReservation(ReservationDTO.map(patient, vaccination));
+
                 log.info("Registration successfully completed: " + vaccination);
             } else {
-                log.info("Completely booked: " + patient);
+                log.info("No vaccinations available: " + patient);
+
                 kafkaProducerService.sendReservation(ReservationDTO.map(patient, null));
             }
 
@@ -56,14 +58,6 @@ public class KafkaConsumerService {
 
     private Vaccination updateVaccination(Vaccination vaccination, Patient patient) {
         List<Patient> patientList = vaccination.getPatients();
-        patientList.add(patient);
-        vaccination.setPatients(patientList);
-
-        return vaccination;
-    }
-
-    private Vaccination getReservationData(Vaccination vaccination, Patient patient) {
-        List<Patient> patientList = new ArrayList<>();
         patientList.add(patient);
         vaccination.setPatients(patientList);
 

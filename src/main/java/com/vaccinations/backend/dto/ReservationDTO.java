@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReservationDTO {
 
+    private String id;
     private String firstName;
     private String lastName;
     private String pesel;
@@ -22,6 +23,7 @@ public class ReservationDTO {
 
     public static ReservationDTO map(Patient patient, Vaccination vaccination) {
         return ReservationDTO.builder()
+                .id(patient.getId())
                 .firstName(patient.getFirstName())
                 .lastName(patient.getLastName())
                 .pesel(patient.getPesel())

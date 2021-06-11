@@ -11,7 +11,7 @@ public class MongoConfig {
 
     @Bean
     public MongoClient mongoClient() {
-        return MongoClients.create("mongodb://<login>:<password>@localhost:27017/vaccinationsDb");
+        return MongoClients.create("mongodb://sjabl:sjabl@localhost:27017/vaccinationsDb");
     }
 
     @Bean

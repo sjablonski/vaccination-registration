@@ -24,33 +24,32 @@ public class KafkaProducerService {
     }
 
     public void sendReservation(ReservationDTO reservationDTO) throws JsonProcessingException {
-        String key = "1";
         String message = objectMapper.writeValueAsString(reservationDTO);
         ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send("reservation-topic", message);
         future.addCallback(new KafkaSendCallback<>() {
 
             @Override
             public void onSuccess(SendResult<String, String> result) {
-                handleSuccess(key, message, result);
+                handleSuccess(message, result);
             }
 
             @Override
             public void onFailure(KafkaProducerException ex) {
-                handleFailure(key, message, ex);
+                handleFailure(message, ex);
             }
         });
     }
 
-    private void handleFailure(String key, String value, Throwable ex) {
+    private void handleFailure(String value, Throwable ex) {
         log.error("Error Sending the Message and the exception is {}", ex.getMessage());
         try {
             throw ex;
         } catch (Throwable throwable) {
-            log.error("Error in OnFailure: {}", throwable.getMessage());
+            log.error("Error in onFailure: {}", throwable.getMessage());
         }
     }
 
-    private void handleSuccess(String key, String value, SendResult<String, String> result) {
-        log.info("Message Sent Successfully for the key : {} and the value is {} , partition is {}", key, value, result.getRecordMetadata().partition());
+    private void handleSuccess(String value, SendResult<String, String> result) {
+        log.info("Message Sent: {}, partition is {}", value, result.getRecordMetadata().partition());
     }
 }
