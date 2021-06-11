@@ -24,12 +24,12 @@ public class KafkaConsumerService {
     public void onMessage(ConsumerRecord<String, String> consumerRecord, Acknowledgment acknowledgment) {
         try {
             ReservationDTO response = objectMapper.readValue(consumerRecord.value(), ReservationDTO.class);
-
-            if(response.getVaccinationDTO() != null) {
-                mailService.sendMail(mailService.createRegistrationConfirmMail(response));
-            } else {
-                mailService.sendMail(mailService.createRegistrationRefusalMail(response.getEmail()));
-            }
+            log.info("Message Received: {}", response.toString());
+             if(response.getVaccinationDTO() != null) {
+                 mailService.sendMail(mailService.createRegistrationConfirmMail(response));
+             } else {
+                 mailService.sendMail(mailService.createRegistrationRefusalMail(response.getEmail()));
+             }
             acknowledgment.acknowledge();
         } catch (Exception ex) {
             log.error(ex.getMessage());

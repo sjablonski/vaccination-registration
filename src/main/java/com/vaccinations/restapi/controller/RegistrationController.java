@@ -1,16 +1,15 @@
 package com.vaccinations.restapi.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vaccinations.restapi.model.ErrorResponse;
 import com.vaccinations.restapi.model.Patient;
 import com.vaccinations.restapi.service.KafkaProducerService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -29,9 +28,14 @@ public class RegistrationController {
     }
 
     @PostMapping(value = "/add")
-    public ResponseEntity<Patient> add(@Valid @RequestBody Patient patient) throws JsonProcessingException {
-        producerService.sendRegistration(patient);
-        return ResponseEntity.status(HttpStatus.CREATED).body(patient);
+    public ResponseEntity<Patient> add(@Valid @RequestBody Patient patient) {
+        try {
+            producerService.sendRegistration(patient);
+            return ResponseEntity.status(HttpStatus.CREATED).body(patient);
+        } catch (Exception ex) {
+            log.error("Endpoint exception /add: {}", ex.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

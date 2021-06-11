@@ -24,7 +24,7 @@ import java.util.List;
 
 @Configuration
 public class GmailConfig {
-    private final String APPLICATION_NAME = "Covid-19-vaccinations";
+    private final String APPLICATION_NAME = "covid-19-vaccinations";
     private final String TOKENS_DIRECTORY_PATH = "tokens";
     private final String CREDENTIALS_FILE_PATH = "/credentials.json";
     private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -49,6 +49,7 @@ public class GmailConfig {
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType("offline")
+                .setApprovalPrompt("force")
                 .build();
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8080).build();
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");

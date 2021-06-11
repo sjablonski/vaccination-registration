@@ -16,6 +16,8 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Patient {
+    private String id;
+
     @NotBlank(message = "{validation.firstName.NotBlank.message}")
     private String firstName;
 
@@ -36,6 +38,6 @@ public class Patient {
 
     @Override
     public String toString() {
-        return String.format("Patient [firstName=\"%s\", lastName=\"%s\", pesel=\"%s\", email=\"%s\", phoneNumber=\"%s\"]", firstName, lastName, pesel, email, phoneNumber);
+        return String.format("Patient [id=\"%s\", firstName=\"%s\", lastName=\"%s\", pesel=\"%s\", email=\"%s\", phoneNumber=\"%s\"]", id, firstName, lastName, pesel, email, phoneNumber);
     }
 }
