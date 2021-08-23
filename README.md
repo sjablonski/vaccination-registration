@@ -1,4 +1,5 @@
 # Vaccination Registration App
+Project for my master's thesis
 
 ## Technology Stack:
 - React with TypeScript
