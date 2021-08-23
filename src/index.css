@@ -1,0 +1,45 @@
+@import '~antd/dist/antd.css';
+
+.ant-form-item-with-help {
+  margin-bottom: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  width: 100%;
+  max-width: 960px;
+  padding: 48px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.alert {
+  margin: 16px 0;
+}
+
+.mt-3 {
+  margin-top: 24px;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
