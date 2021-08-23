@@ -46,3 +46,7 @@ MongoDB model:
 }
 
 ```
+
+## Diagrams
+![Flow](https://raw.githubusercontent.com/sjablonski/vaccination-registration/main/flow.png)
+![Sequence diagram](https://raw.githubusercontent.com/sjablonski/vaccination-registration/main/sequence_diagram.png)
